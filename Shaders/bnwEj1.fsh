@@ -13,7 +13,6 @@ vec2 squareVec(vec2 x) {
 
 void main() {
 	float delta = 2.4 / windowSize.x, i = gl_FragCoord.x, j = gl_FragCoord.y;
-	vec3 color1 = vec3(0.04, 0.16, 0.08), color2 = vec3(0.90, 0.98, 0.67), color3 = vec3(0.67, 0.17, 0.17);
 	vec2 x = vec2(-1.2 + (i * delta),-1.2 + (j * delta));
 	vec2 z = vec2(-0.74543, 0.11301);
 	int count = 0;
@@ -26,18 +25,10 @@ void main() {
 	float gray = 0.0;
 	magnitude = magnitude(x);
 	if(magnitude <= 2.0){
-		pixelColor = vec4(color1, 1.0);
+		gray = 0.0;
 	} else {
-		if(count == 128) {
-			pixelColor = vec4(color2, 1.0);
-		} 
-		else if (count == 0) {
-			pixelColor = vec4(color3, 1.0);
-		}
-		else {
-			vec3 mix = (1/2 * (color2 + color3)) / count;
-			pixelColor = vec4(mix,1.0);
-		}
+		gray = count / 128.0;
 	}
+	pixelColor = vec4(gray, gray, gray, 1.0);
 }
 
