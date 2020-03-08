@@ -11,10 +11,9 @@
 #include <GL/freeglut.h>
 #include <math.h>
 #include "Utils.h"
-#include "Transforms.h"
 
 // Global variables needed
-static int PEAKS = 16;
+static int PEAKS = 24;
 static float INNER_RADIUS = 0.25, OUTER_RADIUS = 0.5;
 // Necessary ID's
 GLuint programId, winSizeLoc, vertexArrayId, bufferId[2], vertexPosLoc, vertexColorLoc;
@@ -140,7 +139,7 @@ static void display() {
 }
 
 // Main function
-int main(int argc, char** argv) {
+int main2(int argc, char** argv) {
 	glutInit(&argc, argv);
 	int w = 600, h = 600;
 	int x = (glutGet(GLUT_SCREEN_WIDTH) - w) / 2;
@@ -154,7 +153,7 @@ int main(int argc, char** argv) {
 	glClearColor(0.5, 0.5, 0.5, 1.0);
 	initShaders();
 	// Arrays calculation function:
-	fillArrays(16, 0.25, 0.5);
+	fillArrays(PEAKS, INNER_RADIUS, OUTER_RADIUS);
 	init();
 	glutMainLoop();
 	return 0;
