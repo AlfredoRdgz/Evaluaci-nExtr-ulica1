@@ -7,8 +7,8 @@
 #include "Utils.h"
 #include <time.h>
 
-#define COLUMNS 20
-#define ROWS 20
+#define COLUMNS 30
+#define ROWS 30
 
 GLint  programID;
 GLuint vertexArrayId;
@@ -23,11 +23,9 @@ void init(){
     GLuint fshID=compileShader("shaders/ejercicio4.fsh", GL_FRAGMENT_SHADER);
 
     if(!shaderCompiled(vshID)){
-        printf("could not compile vsh\n");
         return;
     }
 	if(!shaderCompiled(fshID)){
-        printf("could not compile fsh\n");
         return;
     }
 
@@ -58,32 +56,31 @@ void init(){
 	glEnable(GL_PRIMITIVE_RESTART);
 }
 
-void fill_arrays(){
-    float incY =-2.0/ROWS;
-    float incX =2.0/COLUMNS;
-    float Y = 1.0;
+void fill_arrays(int rows, int columns){
+    float inc_y =-2.0/rows;
+    float inc_x =2.0/columns;
+    float y = 1.0;
     int count =0;
     int countColor=0;
-    for(int i=0;i<ROWS+1;i++){
-        float X = -1.0;
-        for(int j=0;j<COLUMNS+1;j++){
-            vertexPosition[count++]=X;
-            vertexPosition[count++]=Y;
-            vertexColor[countColor++]=(float)rand()/RAND_MAX;
-            vertexColor[countColor++]=(float)rand()/RAND_MAX;
-            vertexColor[countColor++]=(float)rand()/RAND_MAX;
-            X += incX;
+    for(int i=0; i < rows + 1; i++){
+        float x = -1.0;
+        for(int j=0;j<columns+1;j++){
+            vertexPosition[count++] = x;
+            vertexPosition[count++] = y;
+            vertexColor[countColor++] = (float)rand()/RAND_MAX;
+            vertexColor[countColor++] = (float)rand()/RAND_MAX;
+            vertexColor[countColor++] = (float)rand()/RAND_MAX;
+            x += inc_x;
         }
-        Y+=incY;
+        y +=inc_y;
     }
-
     count=0;
-    for(int j=0;j<ROWS;j++){
-        for(int i=0;i<COLUMNS+1;i++){
-            indexes[count++]=i+(j+1)*(COLUMNS+1);
-            indexes[count++]=i+(j)*(COLUMNS+1);
+    for(int j=0; j < rows; j++){
+        for(int i = 0; i < columns + 1; i++){
+            indexes[count++] = i + (j + 1)*(columns + 1);
+            indexes[count++] =i + (j) * (columns + 1);
         }
-        indexes[count++]=RESET;
+        indexes[count++] = RESET;
     }
 }
 
@@ -118,11 +115,8 @@ int main(int argc, char **argv){
     glutDisplayFunc(display);
     glutKeyboardFunc(keyboardFunc);
     glewInit();
-    fill_arrays();
+    fill_arrays(ROWS, COLUMNS);
     init();
-
-
-
     glClearColor(0.5, 0.5, 0.5, 1.0);
     glutMainLoop();
     return 0;
